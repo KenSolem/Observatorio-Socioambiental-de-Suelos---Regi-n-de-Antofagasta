@@ -1,66 +1,566 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observatorio Socioambiental de Suelos - Región de Antofagasta</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observatorio Socioambiental y de Suelos - Región de Antofagasta</title>
+  
+  <!-- Google Fonts: Special Elite (Máquina de escribir/Expediente), Kalam (Manuscrito/Notas), Inter (Cuerpo legible) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kalam:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome para Iconos de Bitácora -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            typewriter: ['"Special Elite"', 'monospace'],
+            hand: ['"Kalam"', 'cursive'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            kraft: {
+              50: '#FAF6EE',
+              100: '#F4ECE1',
+              200: '#EBDDC9',
+              300: '#DEC9AA',
+              500: '#B89668',
+              600: '#8C6D46',
+              800: '#523B22',
+              900: '#382614',
+            },
+            clay: '#B85D38',
+            clayDark: '#8F3D1C',
+            moss: '#556B2F',
+            sepia: '#3D312A',
+            graphite: '#2C2C2C',
+            postit: '#FEF9C3',
+            postitPink: '#FFE4E6',
+            postitBlue: '#E0F2FE',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Cuadrícula técnica sutil de cuaderno de campo */
+    body {
+      background-color: #F5EFEB;
+      background-image: 
+        linear-gradient(to right, rgba(168, 140, 110, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(168, 140, 110, 0.12) 1px, transparent 1px);
+      background-size: 22px 22px;
+      color: #3D312A;
+    }
+
+    /* Efecto Washi Tape (Cinta Adhesiva Artesanal) */
+    .washi-tape {
+      background: rgba(232, 215, 185, 0.78);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      clip-path: polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%);
+      border-top: 1px dashed rgba(140, 110, 75, 0.45);
+      border-bottom: 1px dashed rgba(140, 110, 75, 0.45);
+      position: absolute;
+      z-index: 20;
+    }
+
+    /* Lámina de papel artesanal */
+    .paper-sheet {
+      background: #FCFBF7;
+      box-shadow: 
+        0 2px 4px rgba(60, 40, 20, 0.05),
+        0 8px 24px rgba(60, 40, 20, 0.08),
+        inset 0 0 45px rgba(235, 221, 201, 0.22);
+      border: 1px solid rgba(210, 190, 165, 0.75);
+    }
+
+    /* Chincheta / Pin metálico */
+    .paper-pin {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #D9534F, #8B0000);
+      box-shadow: 0 3px 5px rgba(0,0,0,0.35);
+      display: inline-block;
+      position: absolute;
+    }
+
+    /* Sello postal / timbre */
+    .stamp-badge {
+      border: 2px dashed #B85D38;
+      color: #B85D38;
+      font-family: 'Special Elite', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transform: rotate(-3deg);
+    }
+
+    /* Pestaña activa del archivador */
+    .tab-btn.active {
+      background-color: #FCFBF7 !important;
+      border-bottom-color: transparent !important;
+      font-weight: 700;
+      color: #B85D38;
+      transform: translateY(2px);
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Encabezado -->
-    <header class="bg-slate-800 border-b border-slate-700 shadow-lg py-6 px-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-wide text-emerald-400">Observatorio Socioambiental y de Suelos</h1>
-                <p class="text-slate-400 text-sm mt-1">Región de Antofagasta • Monitoreo ciudadano, investigación territorial y gestión de sitios con potencial presencia de contaminantes.</p>
-            </div>
-            <div class="mt-4 md:mt-0 flex gap-2">
-                <span class="bg-emerald-900/60 text-emerald-300 border border-emerald-700 text-xs px-3 py-1.5 rounded-full font-medium">Escala Regional</span>
-                <span class="bg-slate-700 text-slate-300 text-xs px-3 py-1.5 rounded-full font-medium">Metodología Fundación Chile / CORFO</span>
-            </div>
+  <!-- ============================================== -->
+  <!-- 1. ENCABEZADO: BITÁCORA DE CAMPO               -->
+  <!-- ============================================== -->
+  <header class="max-w-6xl w-full mx-auto pt-8 px-4 sm:px-6 relative">
+    <div class="paper-sheet rounded-md p-6 sm:p-8 relative border-t-4 border-t-clay">
+      
+      <!-- Cintas adhesivas decorativas (Washi Tape) -->
+      <div class="washi-tape -top-3 left-10 w-32 h-6 rotate-[-2deg]"></div>
+      <div class="washi-tape -top-3 right-10 w-32 h-6 rotate-[2.5deg]"></div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b-2 border-dashed border-kraft-300">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-typewriter text-kraft-600 mb-1">
+            <i class="fa-solid fa-compass-drafting text-clay"></i>
+            <span>EXPEDIENTE TÉCNICO REGIONAL • BITÁCORA GEOESPACIAL</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-typewriter font-bold text-sepia tracking-tight">
+            Observatorio Socioambiental y de Suelos
+          </h1>
+          <p class="text-sm sm:text-base font-hand text-kraft-800 text-lg mt-1">
+            Región de Antofagasta • Monitoreo ciudadano, investigación territorial y catastro de fuentes activas
+          </p>
         </div>
-    </header>
 
-    <!-- Contenido Principal -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-8 space-y-8">
+        <!-- Sello de Expediente -->
+        <div class="stamp-badge px-4 py-2 rounded text-center shrink-0 self-start md:self-auto bg-amber-50/60 shadow-sm">
+          <div class="text-[10px] font-bold">CATASTRO INDEPENDIENTE</div>
+          <div class="text-sm font-bold tracking-wider">LÍNEA BASE 2019-2026</div>
+          <div class="text-[9px] text-kraft-600 mt-0.5">Taltal • Antofagasta</div>
+        </div>
+      </div>
 
-        <!-- Panel de Introducción -->
-        <section class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-xl font-semibold text-slate-200">Plataforma de Transparencia y Fiscalización Territorial</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-                Este observatorio recopila e integra bases de datos levantadas a través de investigación de campo independiente y fuentes oficiales durante los últimos años en la Región de Antofagasta. La identificación y caracterización de los sitios se alinea con los criterios técnicos de la <strong>Guía Metodológica para la Gestión de Suelos con Potencial Presencia de Contaminantes</strong>.
-            </p>
-            <p class="text-slate-400 text-xs">
-                Haz clic sobre cualquiera de los puntos georreferenciados en el visor interactivo para inspeccionar el detalle técnico de cada sitio identificado.
-            </p>
-        </section>
+      <!-- Etiquetas informativas superiores -->
+      <div class="mt-4 flex flex-wrap items-center gap-2 text-xs font-mono">
+        <span class="bg-kraft-200 text-kraft-900 px-3 py-1 rounded border border-kraft-300">
+          <i class="fa-solid fa-book-open text-clay mr-1"></i> Fase I: Guía MMA / FCH (2012)
+        </span>
+        <span class="bg-emerald-100/70 text-moss px-3 py-1 rounded border border-emerald-300">
+          <i class="fa-solid fa-mountain mr-1"></i> Catastro Sernageomin 2025
+        </span>
+        <span class="bg-amber-100/70 text-clay px-3 py-1 rounded border border-amber-300">
+          <i class="fa-solid fa-scale-balanced mr-1"></i> Transparencia Territorial Comunitaria
+        </span>
+      </div>
+    </div>
+  </header>
 
-        <!-- Tarjeta del Mapa Interactivo (Protegida sin enlaces externos) -->
-        <section class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-            <div class="p-4 bg-slate-800/90 border-b border-slate-700 flex justify-between items-center">
-                <h3 class="font-medium text-slate-200 text-sm flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Visor Cartográfico Regional de Suelos
-                </h3>
-                <span class="text-xs text-slate-400 font-medium">
-                    Navegación Interactiva Segura
-                </span>
+  <!-- ============================================== -->
+  <!-- 2. CONTENIDO PRINCIPAL: NOTAS Y VISOR          -->
+  <!-- ============================================== -->
+  <main class="max-w-6xl w-full mx-auto mt-6 px-4 sm:px-6 space-y-8 flex-grow">
+
+    <!-- INTRODUCCIÓN Y POST-IT DE RESERVA -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      
+      <!-- Hoja de Cuaderno: Introducción Metodológica -->
+      <div class="lg:col-span-2 paper-sheet rounded-md p-6 relative">
+        <div class="paper-pin top-2 left-6"></div>
+        <h2 class="font-typewriter text-xl font-bold text-sepia mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-file-lines text-clay"></i>
+          Plataforma de Transparencia y Fiscalización Territorial
+        </h2>
+        <p class="text-sm text-kraft-800 leading-relaxed font-sans mb-3">
+          Este observatorio recopila e integra bases de datos levantadas a través de investigación de campo independiente y antecedentes oficiales durante los últimos años en la Región de Antofagasta. La caracterización se basa estrictamente en la <strong>Fase I de la Guía Metodológica para la Gestión de Suelos con Potencial Presencia de Contaminantes (SPPC)</strong> del Ministerio del Medio Ambiente, Corfo y Fundación Chile.
+        </p>
+        <p class="text-xs text-kraft-600 font-mono bg-kraft-100 p-2.5 rounded border border-kraft-200">
+          <i class="fa-solid fa-hand-pointer text-clay mr-1"></i>
+          Haz clic sobre cualquiera de los puntos georreferenciados en el visor para inspeccionar el nombre del sitio, comuna y clasificación ambiental preliminar.
+        </p>
+      </div>
+
+      <!-- Post-it Adhesivo: Reserva y Propiedad Intelectual -->
+      <div class="bg-postit p-5 rounded shadow-md border border-amber-200 rotate-[1.5deg] relative">
+        <div class="paper-pin top-2 left-1/2 -translate-x-1/2"></div>
+        <h3 class="font-hand font-bold text-lg text-sepia mb-1 mt-1">Nota de Custodia Técnica:</h3>
+        <p class="font-hand text-kraft-800 text-sm leading-snug">
+          "Las bases de datos vectoriales con atributos completos, coordenadas de sondeo y notas de inspección permanecen bajo custodia del autor para resguardar la autonomía comunitaria frente a apropiaciones académicas indebidas."
+        </p>
+        <div class="mt-3 pt-2 border-t border-amber-300/60 flex items-center justify-between text-[11px] font-mono text-kraft-600">
+          <span>Gonzalo Lemus L.</span>
+          <span class="text-clay font-bold">Uso Público Libre</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- VISOR CARTOGRÁFICO EMBEBIDO (GOOGLE MY MAPS) -->
+    <section class="paper-sheet rounded-md p-4 sm:p-6 relative">
+      <!-- Cintas adhesivas en esquinas del visor -->
+      <div class="washi-tape -top-2.5 left-12 w-28 h-5 rotate-[-1deg]"></div>
+      <div class="washi-tape -top-2.5 right-12 w-28 h-5 rotate-[1.5deg]"></div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 mt-2 border-b border-kraft-200 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-3 h-3 rounded-full bg-clay animate-pulse"></span>
+          <h2 class="font-typewriter text-lg sm:text-xl font-bold text-sepia">
+            Visor Cartográfico Regional de Suelos
+          </h2>
+          <span class="text-xs bg-kraft-200 text-kraft-800 px-2 py-0.5 rounded font-mono">Navegación Interactiva</span>
+        </div>
+        
+        <div class="text-xs text-kraft-600 font-hand text-sm flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-moss"></i>
+          <span>Despliega la barra lateral izquierda del mapa para filtrar las capas</span>
+        </div>
+      </div>
+
+      <!-- Contenedor del Iframe con el mapa exacto del usuario -->
+      <div class="w-full h-[650px] rounded border-2 border-kraft-300 overflow-hidden shadow-inner bg-[#EAE3D2] relative">
+        <iframe 
+          src="https://www.google.com/maps/d/embed?mid=19raHTDCW6ITijpfebdWwSf8a0t_V4UE&ehbc=2E312F" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy"
+          title="Mapa Observatorio Socioambiental de Suelos - Antofagasta">
+        </iframe>
+        
+        <!-- Recuadro geodésico sobre el mapa -->
+        <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded text-[11px] border border-kraft-300 font-mono shadow-sm flex items-center gap-2">
+          <i class="fa-solid fa-location-crosshairs text-clay"></i>
+          <span>Datum WGS 1984 • Huso 19S</span>
+        </div>
+      </div>
+
+      <!-- Leyenda rápida al pie del visor -->
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs pt-3 border-t border-kraft-200">
+        <div class="flex items-center gap-2 text-kraft-700">
+          <i class="fa-solid fa-circle-check text-moss"></i>
+          <span>Información de acceso libre para juntas de vecinos, comunidades y organizaciones socioambientales.</span>
+        </div>
+        <div class="font-typewriter text-[11px] text-clay">
+          Ref: Estudio FNDR BIP 30438676-0 / Sernageomin 2025
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. GUÍA EXPLICATIVA DE LAS 5 CAPAS DEL MAPA    -->
+    <!-- ============================================== -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <h2 class="font-typewriter text-xl sm:text-2xl font-bold text-sepia">
+          Desglose Técnico: ¿Qué representa cada capa del visor?
+        </h2>
+        <span class="h-0.5 flex-1 bg-kraft-300"></span>
+      </div>
+
+      <!-- Pestañas de Archivador / Fichas Técnicas -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 border-b-2 border-kraft-300 pb-0">
+        <button onclick="switchTab('tab-a')" id="btn-tab-a" class="tab-btn active px-3 py-2.5 rounded-t-md text-xs sm:text-sm font-typewriter border-t border-x border-kraft-300 bg-white text-sepia flex items-center justify-center gap-1.5 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
+          <span>Anexo A</span>
+        </button>
+        <button onclick="switchTab('tab-b')" id="btn-tab-b" class="tab-btn px-3 py-2.5 rounded-t-md text-xs sm:text-sm font-typewriter border-t border-x border-transparent bg-kraft-100 text-kraft-700 flex items-center justify-center gap-1.5 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <span>Anexo B</span>
+        </button>
+        <button onclick="switchTab('tab-c')" id="btn-tab-c" class="tab-btn px-3 py-2.5 rounded-t-md text-xs sm:text-sm font-typewriter border-t border-x border-transparent bg-kraft-100 text-kraft-700 flex items-center justify-center gap-1.5 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+          <span>Anexo C</span>
+        </button>
+        <button onclick="switchTab('tab-d')" id="btn-tab-d" class="tab-btn px-3 py-2.5 rounded-t-md text-xs sm:text-sm font-typewriter border-t border-x border-transparent bg-kraft-100 text-kraft-700 flex items-center justify-center gap-1.5 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+          <span>Anexo D</span>
+        </button>
+        <button onclick="switchTab('tab-serna')" id="btn-tab-serna" class="tab-btn col-span-2 sm:col-span-1 px-3 py-2.5 rounded-t-md text-xs sm:text-sm font-typewriter border-t border-x border-transparent bg-kraft-100 text-kraft-700 flex items-center justify-center gap-1.5 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+          <span>Sernageomin 2025</span>
+        </button>
+      </div>
+
+      <!-- CONTENEDORES DE CONTENIDO POR CAPA -->
+      <div class="paper-sheet rounded-b-md p-6 sm:p-8 border-t-0 shadow-md">
+        
+        <!-- FICHA CAPA 1: ANEXO A -->
+        <div id="content-tab-a" class="tab-content block space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-kraft-200 pb-3">
+            <div>
+              <span class="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">FASE I - ACTIVIDADES 1 Y 2 GUÍA MMA</span>
+              <h3 class="font-typewriter text-xl font-bold text-sepia mt-1">Capa 1 (Anexo A): Catastro Regional de Sitios Identificados</h3>
             </div>
-            <!-- Contenedor del Mapa Embebido (Iframe limpio) -->
-            <div class="w-full h-[650px] bg-slate-950 relative">
-                <iframe src="https://www.google.com/maps/d/embed?mid=19raHTDCW6ITijpfebdWwSf8a0t_V4UE&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="text-right">
+              <span class="text-2xl font-typewriter font-bold text-clay">875</span>
+              <span class="text-xs font-mono text-kraft-600 block">Fuentes Catastradas</span>
             </div>
-        </section>
+          </div>
+          <p class="text-sm text-kraft-800 leading-relaxed font-sans">
+            Representa el <strong>universo total basal</strong> de instalaciones productivas que manejan sustancias o generan residuos con potencial contaminante en la Región de Antofagasta. Es el levantamiento regional previo al filtro de cercanía a poblaciones o fuentes de agua potable.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <div class="bg-kraft-50 p-3.5 rounded border border-kraft-200 text-xs">
+              <h4 class="font-bold text-sepia uppercase tracking-wider mb-2 font-mono">Actividades Incluidas:</h4>
+              <ul class="space-y-1.5 text-kraft-800 list-disc list-inside">
+                <li>Minería metálica (cobre, oro, plata) y faenas no metálicas.</li>
+                <li>Depósitos de relaves, botaderos de estériles y ripios de lixiviación.</li>
+                <li>Actividades de saneamiento, vertederos municipales y basurales.</li>
+                <li>Complejos termoeléctricos y subestaciones eléctricas.</li>
+                <li>Plantas químicas, distribución de combustibles y sustancias peligrosas.</li>
+              </ul>
+            </div>
+            <div class="bg-amber-50/70 p-3.5 rounded border border-amber-200 text-xs">
+              <h4 class="font-bold text-clay uppercase tracking-wider mb-2 font-mono">Criterio de Interpretación:</h4>
+              <p class="text-kraft-800 leading-relaxed">
+                Estar en el Anexo A <strong>no determina culpabilidad ambiental inmediata</strong>, sino la existencia de una fuente potencialmente contaminante según su código CIIU. Expresa la carga histórica total de la actividad económica sobre el territorio.
+              </p>
+            </div>
+          </div>
+        </div>
 
-    </main>
+        <!-- FICHA CAPA 2: ANEXO B -->
+        <div id="content-tab-b" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-kraft-200 pb-3">
+            <div>
+              <span class="text-xs font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">FASE I - ACTIVIDAD 3 (CRIBADO TERRITORIAL)</span>
+              <h3 class="font-typewriter text-xl font-bold text-sepia mt-1">Capa 2 (Anexo B): Priorización de Sitios según Receptores Sensibles</h3>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-typewriter font-bold text-amber-600">258</span>
+              <span class="text-xs font-mono text-kraft-600 block">Sitios Priorizados</span>
+            </div>
+          </div>
+          <p class="text-sm text-kraft-800 leading-relaxed font-sans">
+            Aplica el <strong>Árbol de Decisión de la Guía Metodológica del Ministerio del Medio Ambiente</strong>. Del universo de 875 sitios, <strong>617 resultaron "No priorizados"</strong> al encontrarse aislados geográficamente. Los <strong>258 restantes</strong> presentaron interacción con al menos una variable crítica:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div class="p-3 bg-white rounded border-2 border-red-200 shadow-sm">
+              <span class="font-bold font-mono text-red-700 block mb-1">Población Residente</span>
+              <p class="text-kraft-700 text-[11px]">Radio $\le 2\text{ km}$ otorga <strong>Alta Prioridad</strong>. Distancia de 2 a 3 km otorga <strong>Mediana Prioridad</strong>.</p>
+            </div>
+            <div class="p-3 bg-white rounded border-2 border-blue-200 shadow-sm">
+              <span class="font-bold font-mono text-blue-700 block mb-1">Sistemas Hídricos</span>
+              <p class="text-kraft-700 text-[11px]">Agua para consumo humano potable = <strong>Alta Prioridad</strong>. Riego o recreación = <strong>Mediana</strong>.</p>
+            </div>
+            <div class="p-3 bg-white rounded border-2 border-emerald-200 shadow-sm">
+              <span class="font-bold font-mono text-emerald-700 block mb-1">Usos de Suelo</span>
+              <p class="text-kraft-700 text-[11px]">Suelos con aptitud agrícola, recreacional o industrial/comercial = <strong>Moderada Prioridad</strong>.</p>
+            </div>
+            <div class="p-3 bg-white rounded border-2 border-purple-200 shadow-sm">
+              <span class="font-bold font-mono text-purple-700 block mb-1">Ecosistemas Sensibles</span>
+              <p class="text-kraft-700 text-[11px]">Sectores con especies protegidas o áreas bajo régimen SNASPE = <strong>Baja/Ecológica</strong>.</p>
+            </div>
+          </div>
+        </div>
 
-    <!-- Pie de página con nota de autoría -->
-    <footer class="bg-slate-950 border-t border-slate-800 text-center py-6 text-slate-500 text-xs space-y-1">
-        <p>Observatorio Socioambiental de Suelos • Región de Antofagasta</p>
-        <p>Investigación de campo independiente orientada a la transparencia territorial.</p>
-    </footer>
+        <!-- FICHA CAPA 3: ANEXO C -->
+        <div id="content-tab-c" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-kraft-200 pb-3">
+            <div>
+              <span class="text-xs font-mono font-bold text-red-800 bg-red-100 px-2 py-0.5 rounded">FASE I - ACTIVIDAD 4 (INSPECCIÓN Y PONDERACIÓN)</span>
+              <h3 class="font-typewriter text-xl font-bold text-sepia mt-1">Capa 3 (Anexo C): Jerarquización Técnica del Riesgo Preliminar</h3>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-typewriter font-bold text-red-600">0 - 100%</span>
+              <span class="text-xs font-mono text-kraft-600 block">Puntaje Relativo</span>
+            </div>
+          </div>
+          <p class="text-sm text-kraft-800 leading-relaxed font-sans">
+            Corresponde a los sitios que fueron <strong>inspeccionados en terreno</strong> mediante la Ficha de Inspección SPPC (Anexo 3 de la guía). Se evalúa si la cadena de riesgo está cerrada: <em>Fuente sospechosa + Rutas de exposición (aire, suelo, agua) + Receptores humanos o ecológicos</em>.
+          </p>
+          <div class="bg-kraft-50 p-4 rounded border border-kraft-200 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="border-l-2 border-red-500 pl-3">
+              <strong class="font-bold text-red-700 font-mono block">Alta Jerarquía (60% a 100%):</strong>
+              Evidencia clara de liberación o acopio en contacto directo con comunidades. Tienen urgencia de pasar a <strong>Fase II (Muestreo Químico)</strong>.
+            </div>
+            <div class="border-l-2 border-amber-500 pl-3">
+              <strong class="font-bold text-amber-700 font-mono block">Mediana Jerarquía (30% a 59%):</strong>
+              Sitios donde existen contaminantes y receptores, pero la exposición se encuentra amortiguada geográficamente.
+            </div>
+            <div class="border-l-2 border-emerald-500 pl-3">
+              <strong class="font-bold text-emerald-700 font-mono block">Descartados como SPPC:</strong>
+              Inspecciones donde se verificó remediación previa, ausencia de rutas de contacto o abandono sin carga tóxica significativa.
+            </div>
+          </div>
+        </div>
+
+        <!-- FICHA CAPA 4: ANEXO D -->
+        <div id="content-tab-d" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-kraft-200 pb-3">
+            <div>
+              <span class="text-xs font-mono font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded">FASE I - SUBCONJUNTO OPERACIONAL</span>
+              <h3 class="font-typewriter text-xl font-bold text-sepia mt-1">Capa 4 (Anexo D): Sitios y Faenas Activas bajo Control Sectorial</h3>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-typewriter font-bold text-blue-700">203</span>
+              <span class="text-xs font-mono text-kraft-600 block">Sitios Operativos</span>
+            </div>
+          </div>
+          <p class="text-sm text-kraft-800 leading-relaxed font-sans">
+            Filtra de la lista jerarquizada aquellos que corresponden a <strong>empresas o faenas en operación comercial activa</strong>, separándolos de los pasivos mineros abandonados o faenas huérfanas sin titular conocido.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 bg-blue-50/50 rounded border border-blue-200">
+              <strong class="text-blue-900 font-mono block mb-1">D.S. 148 / MINSAL</strong>
+              Reglamento sobre Manejo de Residuos Peligrosos (RESPEL). Verifica autorizaciones sanitarias de acopio y transporte.
+            </div>
+            <div class="p-3 bg-blue-50/50 rounded border border-blue-200">
+              <strong class="text-blue-900 font-mono block mb-1">D.S. 78 / MINSAL</strong>
+              Reglamento de Almacenamiento de Sustancias Peligrosas (SUSPEL) en faenas mineras e industriales.
+            </div>
+            <div class="p-3 bg-blue-50/50 rounded border border-blue-200">
+              <strong class="text-blue-900 font-mono block mb-1">Resoluciones RCA (SEA)</strong>
+              Compromisos de monitoreo ambiental legalmente exigibles y fiscalizados por la SMA.
+            </div>
+          </div>
+        </div>
+
+        <!-- FICHA CAPA 5: SERNAGEOMIN 2025 -->
+        <div id="content-tab-serna" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-kraft-200 pb-3">
+            <div>
+              <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">CONTRASTE NORMATIVO SECTORIAL (2025)</span>
+              <h3 class="font-typewriter text-xl font-bold text-sepia mt-1">Capa 5: Catastro Nacional de Depósitos de Relaves (Sernageomin)</h3>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-typewriter font-bold text-emerald-700">PAM / Relaves</span>
+              <span class="text-xs font-mono text-kraft-600 block">Ley 20.551</span>
+            </div>
+          </div>
+          <p class="text-sm text-kraft-800 leading-relaxed font-sans">
+            Incorpora la base de datos oficial actualizada de <strong>depósitos de relaves</strong> (activos, inactivos y abandonados) gestionada por el Servicio Nacional de Geología y Minería (Sernageomin) bajo el marco de la Ley de Cierre de Faenas y el D.S. N° 248.
+          </p>
+          <div class="bg-emerald-50/60 p-4 rounded border border-emerald-200 text-xs space-y-2 text-kraft-800">
+            <div class="flex items-start gap-2">
+              <i class="fa-solid fa-code-compare text-emerald-700 mt-0.5 text-sm"></i>
+              <div>
+                <strong>Diferencia metodológica crucial:</strong> Sernageomin evalúa principalmente la <em>estabilidad física estructural</em> del muro del tranque (peligro de colapso o aluvión). En cambio, la Guía MMA (Componente B) evalúa la <em>toxicidad química en el suelo</em> y el arrastre de polvo hacia la población cercana.
+              </div>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-clay mt-0.5 text-sm"></i>
+              <div>
+                <strong>Por qué cambió el criterio en 2024-2025:</strong> Sernageomin redujo el número de relaves prioritarios al descartar aquellos con planes de cierre aprobados o sin amenaza física inmediata. Sin embargo, para las comunidades locales, la presencia de metales pesados en suelos residenciales sigue sin resolverse.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. APUNTES DE CAMPO / NOTAS AL MARGEN          -->
+    <!-- ============================================== -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <div class="bg-postit p-5 rounded shadow-md border border-amber-200 rotate-[-1deg] relative">
+        <div class="paper-pin top-2 left-1/2 -translate-x-1/2"></div>
+        <h4 class="font-hand font-bold text-lg text-sepia mb-2 mt-1">El radio crítico de 2 km:</h4>
+        <p class="font-hand text-kraft-800 text-sm leading-snug">
+          "Las directrices de la OMS y la Guía MMA establecen que las poblaciones a menos de 2 km de un depósito de relaves o planta de beneficio se encuentran en el radio directo de exposición a material particulado fugitivo."
+        </p>
+        <span class="text-[10px] font-mono text-kraft-600 block text-right mt-3">— Criterio de Salud Pública</span>
+      </div>
+
+      <div class="bg-postitPink p-5 rounded shadow-md border border-rose-200 rotate-[1.5deg] relative">
+        <div class="paper-pin top-2 left-1/2 -translate-x-1/2"></div>
+        <h4 class="font-hand font-bold text-lg text-rose-950 mb-2 mt-1">¿Y la remediación efectiva?</h4>
+        <p class="font-hand text-kraft-800 text-sm leading-snug">
+          "El estudio de Componente B identificó con claridad en 2019 los sitios más riesgosos que debían pasar a Fase III (Plan de Remediación). Sin embargo, la gran mayoría sigue sin intervención estatal ni privada."
+        </p>
+        <span class="text-[10px] font-mono text-kraft-600 block text-right mt-3">— Diagnóstico Territorial</span>
+      </div>
+
+      <div class="bg-postitBlue p-5 rounded shadow-md border border-sky-200 rotate-[-0.5deg] relative">
+        <div class="paper-pin top-2 left-1/2 -translate-x-1/2"></div>
+        <h4 class="font-hand font-bold text-lg text-sky-950 mb-2 mt-1">Acción Comunitaria Libre:</h4>
+        <p class="font-hand text-kraft-800 text-sm leading-snug">
+          "La información geográfica no debe quedar encerrada en informes de consultoría. Esta plataforma devuelve los datos a la ciudadanía para fundamentar alegaciones, fiscalizaciones y defender la salud."
+        </p>
+        <span class="text-[10px] font-mono text-kraft-600 block text-right mt-3">— Bitácora Gonzalo Lemus</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 5. PIE DE PÁGINA: AUTORÍA Y CONTACTO FORMAL    -->
+  <!-- ============================================== -->
+  <footer class="max-w-6xl w-full mx-auto mt-12 px-4 sm:px-6 mb-8">
+    <div class="paper-sheet rounded-md p-6 text-center sm:text-left relative border-t-2 border-clay">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <div class="font-typewriter text-sm font-bold text-sepia">
+            SISTEMATIZACIÓN Y INVESTIGACIÓN TÉCNICA TERRITORIAL
+          </div>
+          <p class="text-xs text-kraft-700 mt-1 font-sans">
+            Levantamiento de campo, cruces GIS y cartografía independiente: <strong>Gonzalo Lemus L.</strong>
+          </p>
+          <p class="text-[11px] text-kraft-600 mt-0.5">
+            Taltal / Antofagasta, Chile • Línea de trabajo territorial 2023 - 2026.
+          </p>
+        </div>
+
+        <!-- Tarjeta de Solicitud y Reserva -->
+        <div class="bg-white p-3.5 rounded border border-kraft-300 text-xs text-left max-w-sm shadow-sm">
+          <div class="font-mono font-bold text-clay flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-lock"></i>
+            <span>Bases de Datos Vectoriales: Reservadas</span>
+          </div>
+          <p class="text-[11px] text-kraft-800 leading-tight">
+            Para convenios formales, acceso a bases de datos con capas shapefile/geodatabase o talleres comunitarios, contactar al autor.
+          </p>
+          <div class="mt-2 text-xs font-mono text-clay font-semibold">
+            gonzalo.lemus.taltal@gmail.com
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-kraft-200 text-[10px] text-kraft-600 font-mono flex flex-col sm:flex-row justify-between items-center gap-2">
+        <span>© 2026 Observatorio Socioambiental de Suelos • Material para difusión y defensa comunitaria citando autoría original.</span>
+        <span>Sistema de Referencia: SIRGAS-Chile / WGS84 UTM 19S</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT PARA INTERACTIVIDAD DE PESTAÑAS (FICHAS DE ARCHIVADOR) -->
+  <script>
+    function switchTab(tabId) {
+      // Ocultar todas las fichas
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.add('hidden'));
+
+      // Desactivar todos los botones
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active', 'bg-white', 'text-clay', 'border-kraft-300');
+        btn.classList.add('bg-kraft-100', 'text-kraft-700', 'border-transparent');
+      });
+
+      // Mostrar la ficha seleccionada
+      const activeContent = document.getElementById('content-' + tabId);
+      if (activeContent) {
+        activeContent.classList.remove('hidden');
+      }
+
+      // Activar el botón correspondiente
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-white', 'text-clay', 'border-kraft-300');
+        activeBtn.classList.remove('bg-kraft-100', 'text-kraft-700', 'border-transparent');
+      }
+    }
+  </script>
 
 </body>
 </html>
